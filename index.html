@@ -25,7 +25,7 @@
 #cloudClose{display:none;float:right;border:0;background:#edf3f5;color:#14263d;border-radius:7px;cursor:pointer;padding:5px 9px}
 
 @media(max-width:650px){#mainApp[style*="flex"]{display:block!important}#cloudBox.connected{position:fixed;inset:auto 8px 60px 8px;width:auto;max-height:70vh;overflow:auto;margin:0}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" id="mainApp" style="display:none"><aside><h2>◈ Meu Orçamento</h2><small>Financeiro Familiar • v1.7.1</small><nav id="nav"></nav></aside><main><header><div><h1 id="pageTitle">Visão geral</h1><p class="muted">Acompanhamento de saldos e compromissos</p></div><span class="tag">● FinanTech 1.7.1</span></header><div id="view"></div></main></div><script>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" id="mainApp" style="display:none"><aside><h2>◈ Meu Orçamento</h2><small>Financeiro Familiar • v1.7.2</small><nav id="nav"></nav></aside><main><header><div><h1 id="pageTitle">Visão geral</h1><p class="muted">Acompanhamento de saldos e compromissos</p></div><span class="tag">● FinanTech 1.7.2</span></header><div id="view"></div></main></div><script>
 const KEY='familia_financas_prototipo_v12',OLD='familia_financas_prototipo_v11';
 const init={config:{income:9000,base:5770,extras:1000,reserve:0},cutoff:'2026-10-14',opening:-4500,transactions:[],recurring:[],cardRegistry:[],cardPurchases:[],companies:[],debt:[],savings:[],categories:['Moradia','Energia','Gás','Água','Internet','Telefone','Supermercado','Refeições e lanches','Transporte','Combustível','Saúde','Farmácia','Faculdade','Educação','Lazer','Assinaturas','Compras','Outros','Salário','13º salário','Férias / abono']};
 let data=load(),page='Painel',editing=null,flowStart=ym()+'-01',flowEnd=dueDate(ym(),31),flowSort='dateAsc',purchaseCard='',purchaseMonth=ym(),recurringEdit=null,cardEdit=null;
@@ -118,7 +118,7 @@ let sbClient=null,sbUser=null,cloudEnabled=false,cloudTimer=null,cloudBusy=false
 const sbCfgKey='finantech_sb_config';
 function cloudState(t){document.getElementById('cloudStatus').textContent=t}
 function cloudInit(){
- try{const c=JSON.parse(localStorage.getItem(sbCfgKey)||'{}');document.getElementById('sbUrl').value='https://migrkjmdziggzgqiadlh.supabase.co';document.getElementById('sbKey').value=c.key||'sb_publishable_RQbjwYOP4bcwOAZQh7kugw_3E5_Xyfp';}catch(e){}
+ try{const c=JSON.parse(localStorage.getItem(sbCfgKey)||'{}');document.getElementById('sbUrl').value='https://migrkjmdziggzgqiadlh.supabase.co';document.getElementById('sbKey').value='sb_publishable_RQbjwYOP4bcwOAZQh7kugw_3E5_Xyfp';}catch(e){}
 }
 function cloudSchedule(){
  if(!cloudEnabled||!sbUser)return;
@@ -128,15 +128,22 @@ async function cloudLogin(){
  try{
  const url='https://migrkjmdziggzgqiadlh.supabase.co';
  document.getElementById('sbUrl').value=url;
- const key=document.getElementById('sbKey').value.trim();
+ const key='sb_publishable_RQbjwYOP4bcwOAZQh7kugw_3E5_Xyfp';
+ document.getElementById('sbKey').value=key;
+ const email=document.getElementById('sbEmail').value.trim();
+ const password=document.getElementById('sbPassword').value;
+ if(!email||!password)throw Error('Preencha o e-mail e a senha antes de entrar.');
+ window.__finantechPhase='inicialização';
  if(!key.startsWith('sb_publishable_')&&!key.startsWith('eyJ'))throw Error('Informe uma chave pública Supabase');
  if(!window.supabase)throw Error('Biblioteca não carregada. Verifique sua conexão com a internet.');
  sbClient=window.supabase.createClient(url,key,{auth:{persistSession:true,autoRefreshToken:true}});
+ window.__finantechPhase='autenticação';
  cloudState('Autenticando...');
- const {data:login,error}=await sbClient.auth.signInWithPassword({email:document.getElementById('sbEmail').value.trim(),password:document.getElementById('sbPassword').value});
+ const {data:login,error}=await sbClient.auth.signInWithPassword({email,password});
  if(error)throw error;
  sbUser=login.user;document.getElementById('sbPassword').value='';
  localStorage.setItem(sbCfgKey,JSON.stringify({url,key}));
+ window.__finantechPhase='leitura do banco';
  const {data:record,error:readErr}=await sbClient.from('app_snapshots').select('documento').eq('user_id',sbUser.id).maybeSingle();
  if(readErr)throw readErr;
  if(record?.documento&&Object.keys(record.documento).length){
@@ -149,7 +156,7 @@ async function cloudLogin(){
  cloudEnabled=true;document.getElementById('cloudSetup').style.display='none';document.getElementById('cloudConnected').style.display='block';document.getElementById('mainApp').style.display='flex';document.getElementById('cloudBox').classList.add('connected','collapsed');document.getElementById('cloudToggle').classList.add('visible');
  document.getElementById('cloudUser').textContent=sbUser.email;
  cloudState('Conectado');
- }catch(e){cloudState('Erro');alert('Não foi possível conectar: '+e.message+"\n\nConfirme a URL e a chave pública. Se for um link de confirmação de e-mail, confira o redirecionamento configurado no Supabase.")}
+ }catch(e){cloudState('Erro');document.getElementById('cloudError').textContent='Etapa: '+(window.__finantechPhase||'inicialização')+' — '+(e?.message||String(e));}
 }
 async function cloudWrite(){
  const {error}=await sbClient.from('app_snapshots').upsert({user_id:sbUser.id,documento:data,atualizado_em:new Date().toISOString()},{onConflict:'user_id'});
@@ -176,9 +183,9 @@ function cloudTogglePanel(){document.getElementById('cloudBox').classList.toggle
 document.addEventListener("DOMContentLoaded",()=>{if(!localStorage.getItem(KEY))localStorage.setItem(KEY,JSON.stringify(data));render();cloudInit();});
 </script><button id="cloudToggle" type="button" onclick="cloudTogglePanel()" aria-label="Abrir painel de conexão Supabase">☁ Conectado</button><div id="cloudBox">
 <div class="brand-icon">◈</div><h1 class="login-title">FinanTech</h1><p class="login-sub">Seu controle financeiro familiar</p><b>Entrar com Supabase</b><span id="cloudStatus" style="float:right;color:#607485">Desconectado</span>
-<div id="cloudSetup" style="margin-top:9px">
+<div id="cloudSetup" style="margin-top:9px"><p id="cloudError" role="alert" style="color:#b42318;font-weight:600;overflow-wrap:anywhere"></p>
 <label>URL do projeto<input id="sbUrl" readonly title="URL fixa do projeto FinanTech" placeholder="https://migrkjmdziggzgqiadlh.supabase.co" style="margin:5px 0" /></label>
-<label>Chave pública (publishable key)<input id="sbKey" type="password" placeholder="sb_publishable_..." style="margin:5px 0" /></label>
+<label>Chave pública (publishable key)<input id="sbKey" type="password" readonly placeholder="sb_publishable_..." style="margin:5px 0" /></label>
 <label>E-mail<input id="sbEmail" type="email" autocomplete="username" style="margin:5px 0" /></label>
 <label>Senha<input id="sbPassword" type="password" autocomplete="current-password" style="margin:5px 0" /></label>
 <button class="primary" onclick="cloudLogin()">Entrar e conectar</button>
