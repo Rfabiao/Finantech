@@ -25,9 +25,46 @@
 #cloudClose{display:none;float:right;border:0;background:#edf3f5;color:#14263d;border-radius:7px;cursor:pointer;padding:5px 9px}
 
 @media(max-width:650px){#mainApp[style*="flex"]{display:block!important}#cloudBox.connected{position:fixed;inset:auto 8px 60px 8px;width:auto;max-height:70vh;overflow:auto;margin:0}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" id="mainApp" style="display:none"><aside><h2>◈ Meu Orçamento</h2><small>Financeiro Familiar • v1.9</small><nav id="nav"></nav></aside><main><header><div><h1 id="pageTitle">Visão geral</h1><p class="muted">Acompanhamento de saldos e compromissos</p></div><span class="tag">● FinanTech 1.8</span></header><div id="view"></div></main></div><script>
+
+.analytics-shell{background:linear-gradient(130deg,#112b43,#124e62);color:#fff;border-radius:20px;padding:26px;margin:20px 0;box-shadow:0 15px 35px #15384c20}
+.analytics-shell h3{font-size:23px;color:#fff;margin:0 0 6px}.analytics-shell p{color:#c6e5ed}
+.slice-toolbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:18px 0}
+.slice-toolbar label{color:#cce1e8;font-size:12px}.slice-toolbar select{color:#183347;background:white;padding:10px;border:0;border-radius:9px;width:100%}
+.slice-toolbar button{background:#1e7890;color:#fff;border:1px solid #65b9c5;border-radius:9px}
+.drill-breadcrumbs{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0 20px}
+.drill-breadcrumbs button{border:1px solid #75b6c4;background:#17475d;color:white;border-radius:20px;padding:7px 13px;cursor:pointer}
+.drill-breadcrumbs button:last-child{background:#daf7f5;color:#11384c}
+.bigchart{background:white;color:#183448;border-radius:16px;padding:22px;min-height:390px}
+.bigchart h4{font-size:18px;margin:0 0 8px}
+.bigchart .chart-row{display:grid;grid-template-columns:minmax(120px,230px) 1fr 120px;align-items:center;gap:14px;width:100%;padding:10px;border:0;border-bottom:1px solid #e7eef3;background:white;text-align:left;color:#213c50;cursor:pointer}
+.bigchart .chart-row:hover,.bigchart .chart-row:focus{background:#eaf8fb;outline:2px solid #9fdde4}
+.bigchart .chart-label{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bigchart .chart-track{height:26px;background:#e9f2f5;border-radius:7px;overflow:hidden}
+.bigchart .chart-fill{height:100%;background:linear-gradient(90deg,#00a4aa,#3273d9);border-radius:7px;transition:width .25s}
+.bigchart .chart-amount{text-align:right;font-weight:700;font-size:13px}
+.analytics-bottom{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.analytics-mini{background:#fff;color:#19364a;border-radius:15px;padding:20px;min-height:200px}
+.analytics-mini h4{margin:0 0 14px}.analytics-mini .mini-row{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #e6eef2;padding:8px 0;font-size:13px}
+.analytics-mini .mini-row button{border:0;background:transparent;color:#116b8b;cursor:pointer;text-align:left}
+@media(max-width:760px){.analytics-bottom{grid-template-columns:1fr}.bigchart .chart-row{grid-template-columns:100px 1fr 90px;gap:6px;padding:8px 2px}.bigchart{padding:12px}.analytics-shell{padding:15px}.bigchart .chart-amount{font-size:11px}}
+
+.trend-panel,.favorite-panel{background:#fff;border:1px solid #dfe9f0;border-radius:18px;padding:22px;margin:20px 0;box-shadow:0 5px 25px #1a3b5010}
+.trend-head,.favorite-heading{display:flex;align-items:start;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.trend-head h3,.favorite-heading h3{font-size:22px;margin:0 0 8px;color:#12344b}
+.trend-head p{max-width:720px}
+.trend-legend{display:flex;gap:16px;white-space:nowrap;font-size:13px;color:#49657a}
+.legend-dot{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:middle}
+.trend-controls{display:grid;grid-template-columns:repeat(3,minmax(160px,1fr));gap:14px;margin:20px 0}
+.trend-graph{background:#f8fbfe;border-radius:14px;padding:15px;overflow-x:auto}
+.trend-graph svg{display:block;width:100%;min-width:570px;height:auto}
+.trend-table{margin-top:16px}
+.favorite-items{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+.favorite-item{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid #e1eaf0;border-radius:10px;padding:11px 14px}
+.favorite-item div{display:flex;gap:8px}
+@media(max-width:760px){.trend-controls{grid-template-columns:1fr}.trend-panel,.favorite-panel{padding:14px}.favorite-item{align-items:start;flex-direction:column}}
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" id="mainApp" style="display:none"><aside><h2>◈ Meu Orçamento</h2><small>Financeiro Familiar • v2.1</small><nav id="nav"></nav></aside><main><header><div><h1 id="pageTitle">Visão geral</h1><p class="muted">Acompanhamento de saldos e compromissos</p></div><span class="tag">● FinanTech 2.1</span></header><div id="view"></div></main></div><script>
 const KEY='familia_financas_prototipo_v12',OLD='familia_financas_prototipo_v11';
-const init={config:{income:9000,base:5770,extras:1000,reserve:0},cutoff:'2026-10-14',opening:-4500,transactions:[],recurring:[],cardRegistry:[],cardPurchases:[],companies:[],debt:[],savings:[],categories:['Moradia','Energia','Gás','Água','Internet','Telefone','Supermercado','Refeições e lanches','Transporte','Combustível','Saúde','Farmácia','Faculdade','Educação','Lazer','Assinaturas','Compras','Outros','Salário','13º salário','Férias / abono']};
+const init={config:{income:9000,base:5770,extras:1000,reserve:0},cutoff:'2026-10-14',opening:-4500,transactions:[],recurring:[],cardRegistry:[],cardPurchases:[],companies:[],analysisFavorites:[],debt:[],savings:[],categories:['Moradia','Energia','Gás','Água','Internet','Telefone','Supermercado','Refeições e lanches','Transporte','Combustível','Saúde','Farmácia','Faculdade','Educação','Lazer','Assinaturas','Compras','Outros','Salário','13º salário','Férias / abono']};
 
 const money=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c])),today=()=>new Date().toLocaleDateString('en-CA'),ym=()=>today().slice(0,7),uid=()=>crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random()),sum=(a,f)=>a.reduce((t,x)=>t+Number(f(x)||0),0);
 let data=load(),page='Painel',editing=null,flowStart=ym()+'-01',flowEnd=dueDate(ym(),31),flowSort='dateAsc',purchaseCard='',purchaseMonth=ym(),recurringEdit=null,cardEdit=null;
@@ -41,6 +78,7 @@ function applyCompanyCategory(selectEl){let company=(data.companies||[]).find(c=
 
 function companyName(id){return (data.companies||[]).find(c=>c.id===id)?.name||'—'}
 function save(){localStorage.setItem(KEY,JSON.stringify(data));cloudSchedule()}
+function ensureAnalysis(){if(!Array.isArray(data.analysisFavorites))data.analysisFavorites=[]}
 const pages=['Painel','Indicadores','Lançamentos','Recorrentes','Cartões','Orçamento','Reserva','Importação e backup','Configurações'];
 function setPage(p){page=p;editing=null;render()}
 function card(label,value,cls=''){return `<div class="card"><label>${label}</label><strong class="${cls}">${money(value)}</strong></div>`}
@@ -57,7 +95,7 @@ function flows(){let base=data.transactions.filter(t=>t.date>=data.cutoff).map(t
 function signed(t){return t.type==='Receita'?Number(t.amount):t.type==='Despesa'?-Number(t.amount):0}
 function balance(){let a=flows(),paid=sum(a.filter(x=>x.paid),signed),all=sum(a,signed);return {paid:data.opening+paid,projected:data.opening+all,scheduled:sum(a.filter(x=>!x.paid),signed),count:a.filter(x=>!x.paid).length}}
 function currentMonth(){return flows().filter(x=>x.date.slice(0,7)===ym())}
-let chartTop=10,chartStyle='bars',chartOrder='desc',chartShow='expense',dashboardPeriod='month',dashboardMonth=ym(),indicatorMode='month',indicatorMonth=ym(),indicatorStart=ym()+'-01',indicatorEnd=dueDate(ym(),31),indicatorGroup='company',indicatorStatus='all';
+let trendDimension='company',trendSelection='',trendView='line',drillDimensions=['category','company','month'],drillPath=[],chartTop=10,chartStyle='bars',chartOrder='desc',chartShow='expense',dashboardPeriod='month',dashboardMonth=ym(),indicatorMode='month',indicatorMonth=ym(),indicatorStart=ym()+'-01',indicatorEnd=dueDate(ym(),31),indicatorGroup='company',indicatorStatus='all';
 function setDashboardPeriod(v){dashboardPeriod=v;render()}
 function setDashboardMonth(v){if(/^\d{4}-\d{2}$/.test(v)){dashboardMonth=v;dashboardPeriod='month';render()}}
 function dashboard(){
@@ -99,28 +137,102 @@ return `<div class="panel"><h3>Compras e parcelas</h3><p class="help">Selecione 
 function addCard(e){e.preventDefault();let x=Object.fromEntries(new FormData(e.target));x.dueDay=Number(x.dueDay);x.closingDay=x.closingDay?Number(x.closingDay):null;data.cardRegistry.push({...x,id:uid()});save();render()}
 function deleteCard(id){if(data.cardPurchases.some(p=>p.cardId===id)){alert('Este cartão possui compras. Exclua ou transfira as compras antes.');return}removeItem('cardRegistry',id)}
 function addPurchase(e){e.preventDefault();let x=Object.fromEntries(new FormData(e.target));x.amount=Number(x.amount);x.installments=Number(x.installments);data.cardPurchases.push({...x,id:uid()});save();render()}
-function setIndicatorFilters(e){e.preventDefault();let f=new FormData(e.target);indicatorMode=f.get('mode');indicatorMonth=f.get('month');indicatorStart=f.get('start');indicatorEnd=f.get('end');indicatorGroup=f.get('group');indicatorStatus=f.get('status');if(indicatorMode==='dates'&&indicatorStart>indicatorEnd){alert('Data inicial deve ser anterior à data final.');return}render()}
-function setChartOptions(el){const form=el.closest('.chart-toolbar');chartTop=Number(form.querySelector('[name=top]').value);chartStyle=form.querySelector('[name=style]').value;chartOrder=form.querySelector('[name=order]').value;chartShow=form.querySelector('[name=metric]').value;render()}
-function renderChartSVG(entries,kind='bars'){
- if(!entries.length)return '<p class="muted">Sem registros para os filtros escolhidos.</p>';
- let vals=entries.map(x=>Math.max(0,Number(x[1])||0)),max=Math.max(1,...vals),w=720,h=34*entries.length+35;
- if(kind==='columns'){w=720;h=290;let step=(w-55)/entries.length,barWidth=Math.max(9,Math.min(55,step*.65));return `<svg role="img" aria-label="Gráfico de colunas" viewBox="0 0 ${w} ${h}" style="width:100%;height:auto"><line x1="40" y1="246" x2="715" y2="246" stroke="#cbd7df"/>${entries.map(([name,value],i)=>{let x=45+i*step+(step-barWidth)/2,height=Math.max(1,190*value/max);return `<g><title>${esc(name)}: ${money(value)}</title><rect x="${x}" y="${246-height}" width="${barWidth}" height="${height}" rx="4" fill="#087e8b"/><text x="${x+barWidth/2}" y="265" font-size="10" text-anchor="middle" fill="#526b7c">${esc(String(name).slice(0,12))}</text></g>`}).join('')}</svg>`}
- return `<svg role="img" aria-label="Gráfico de barras" viewBox="0 0 ${w} ${h}" style="width:100%;height:auto"><line x1="235" y1="8" x2="235" y2="${h-10}" stroke="#d7e2e8"/>${entries.map(([name,value],i)=>{let y=12+i*34,len=Math.max(1,360*value/max);return `<g><title>${esc(name)}: ${money(value)}</title><text x="225" y="${y+17}" text-anchor="end" font-size="12" fill="#243b4d">${esc(String(name).slice(0,32))}</text><rect x="245" y="${y+3}" width="${len}" height="19" rx="4" fill="#087e8b"/><text x="${Math.min(610,252+len)}" y="${y+17}" font-size="11" fill="#243b4d">${money(value)}</text></g>`}).join('')}</svg>`
+function setIndicatorFilters(e){e.preventDefault();let f=new FormData(e.target);indicatorMode=f.get('mode');indicatorMonth=f.get('month');indicatorStart=f.get('start');indicatorEnd=f.get('end');indicatorGroup=f.get('group');indicatorStatus=f.get('status');drillPath=[];if(indicatorMode==='dates'&&indicatorStart>indicatorEnd){alert('Data inicial deve ser anterior à data final.');return}render()}
+function analyticsRows(expenses,incomes){return chartShow==='income'?incomes:expenses}
+function dimensionLabel(d){return ({category:'Categoria',company:'Empresa',month:'Mês',status:'Situação',origin:'Origem'})[d]||d}
+function dimensionValue(t,d){if(d==='category')return t.category||'Sem categoria';if(d==='company'){let n=companyName(t.companyId);return n==='—'?'Sem empresa':n}if(d==='month')return monthBR(t.date.slice(0,7));if(d==='status')return t.paid?'Liquidado':'Pendente';if(d==='origin')return t.source==='cartao'?'Cartão':'Conta';return 'Outros'}
+function drillSetDimension(index,val){drillDimensions[index]=val;drillPath=drillPath.slice(0,index);render()}
+function drillSelect(value){if(drillPath.length>=3)return;drillPath.push({dimension:drillDimensions[drillPath.length],value});render()}
+function drillBack(depth){drillPath=drillPath.slice(0,depth);render()}
+function drillMetric(v){chartShow=v;drillPath=[];render()}
+function drillRows(rows){return rows.filter(t=>drillPath.every(p=>dimensionValue(t,p.dimension)===p.value))}
+function drillGroup(rows,dim){let m=new Map();for(let x of rows){let k=dimensionValue(x,dim);m.set(k,(m.get(k)||0)+Number(x.amount||0))}return [...m].sort((a,b)=>b[1]-a[1])}
+function drillButton(v,depth){return `<button type="button" onclick="drillSelect(decodeURIComponent('${encodeURIComponent(v).replace(/'/g,'%27')}'))" title="Detalhar ${esc(v)}">${esc(v)} <span aria-hidden="true">›</span></button>`}
+function indicatorCharts(expenses,incomes){
+let selected=analyticsRows(expenses,incomes),filtered=drillRows(selected),depth=drillPath.length,dim=drillDimensions[Math.min(depth,2)];
+let groups=drillGroup(filtered,dim),shown=groups.slice(0,chartTop===100?groups.length:chartTop),max=Math.max(1,...groups.map(x=>x[1]));
+let total=sum(filtered,x=>x.amount);
+let otherDims=['category','company','month','status','origin'].filter(d=>d!==dim);
+let nextName=depth<3?dimensionLabel(drillDimensions[Math.min(depth+1,2)]):'Lançamentos';
+return `<div class="analytics-shell"><h3>Explorador financeiro</h3><p>Monte sua análise, clique em uma barra para detalhar e combine dimensões como em uma segmentação de dados.</p>
+<div class="slice-toolbar"><label>Indicador<select onchange="drillMetric(this.value)"><option value="expense" ${chartShow==='expense'?'selected':''}>Despesas</option><option value="income" ${chartShow==='income'?'selected':''}>Receitas</option></select></label>
+${[0,1,2].map((i)=>`<label>${i===0?'Dimensão principal':`Drill-down ${i}`}<select onchange="drillSetDimension(${i},this.value)">${['category','company','month','status','origin'].map(d=>`<option value="${d}" ${drillDimensions[i]===d?'selected':''}>${dimensionLabel(d)}</option>`).join('')}</select></label>`).join('')}
+<label>Exibir<select onchange="chartTop=Number(this.value);render()">${[5,10,15,25,100].map(n=>`<option value="${n}" ${chartTop===n?'selected':''}>${n===100?'Todos':`Top ${n}`}</option>`).join('')}</select></label></div>
+<div class="drill-breadcrumbs"><button onclick="drillBack(0)">Visão geral</button>${drillPath.map((x,i)=>`<button onclick="drillBack(${i+1})">${dimensionLabel(x.dimension)}: ${esc(x.value)}</button>`).join('')}</div>
+<div class="bigchart"><h4>${depth>=3?'Detalhamento final':`${chartShow==='income'?'Receitas':'Despesas'} por ${dimensionLabel(dim).toLowerCase()}`}</h4>
+<p style="color:#617b8b;font-size:13px">${filtered.length} registros · ${money(total)} · ${depth<3?'Clique em uma barra para detalhar por '+nextName.toLowerCase():'Seleção completa'}</p>
+${depth>=3?table(['Data','Descrição','Empresa','Categoria','Valor'],filtered.map(t=>`<tr><td>${dateBR(t.date)}</td><td>${esc(t.description||'—')}</td><td>${esc(dimensionValue(t,'company'))}</td><td>${esc(dimensionValue(t,'category'))}</td><td>${money(t.amount)}</td></tr>`)):
+shown.length?shown.map(([label,value],i)=>`<button class="chart-row" onclick="drillSelect(decodeURIComponent('${encodeURIComponent(label).replace(/'/g,'%27')}'))" title="Detalhar ${esc(label)}"><span class="chart-label">${esc(label)}</span><span class="chart-track"><span class="chart-fill" style="display:block;width:${(value/max*100).toFixed(2)}%;background:${i%3===0?'linear-gradient(90deg,#08a6a7,#087b91)':i%3===1?'linear-gradient(90deg,#5686ef,#6053c6)':'linear-gradient(90deg,#1cbb9c,#3a9dce)'}"></span></span><span class="chart-amount">${money(value)} ›</span></button>`).join(''):'<p>Sem registros para este filtro.</p>'}
+${groups.length>shown.length?`<p style="color:#718594">Exibindo ${shown.length} de ${groups.length} grupos. Altere a opção Exibir para ver mais.</p>`:''}
+</div><div class="analytics-bottom"><div class="analytics-mini"><h4>Composição por situação</h4>${drillGroup(filtered,'status').map(([n,v])=>`<div class="mini-row"><span>${esc(n)}</span><strong>${money(v)}</strong></div>`).join('')||'Sem registros'}</div><div class="analytics-mini"><h4>Composição por origem</h4>${drillGroup(filtered,'origin').map(([n,v])=>`<div class="mini-row"><span>${esc(n)}</span><strong>${money(v)}</strong></div>`).join('')||'Sem registros'}</div></div>
+</div>`}
+
+function indicatorSourceRows(start,end){
+ const tx=data.transactions.filter(t=>t.date>=start&&t.date<=end&&t.date>=data.cutoff).map(t=>({...t,source:'conta'}));
+ const parts=invoiceLines().filter(l=>l.date>=start&&l.date<=end&&l.date>=data.cutoff).map(l=>{
+  const p=data.cardPurchases.find(p=>p.id===l.purchaseId);
+  return {...l,type:'Despesa',paid:!!data.invoicePaid?.[l.cardId+'|'+l.month],companyId:p?.companyId||'',category:p?.category||'Cartão (sem categoria)',description:p?.description||'Compra no cartão',source:'cartao'};
+ });
+ return [...tx,...parts];
 }
-function groupIndicatorRows(rows,dimension){let map=new Map();for(let t of rows){let key=dimension==='company'?(companyName(t.companyId)==='—'?'Sem empresa':companyName(t.companyId)):dimension==='category'?(t.category||'Sem categoria'):t.date.slice(0,7);if(dimension==='month')key=monthBR(key);map.set(key,(map.get(key)||0)+Number(t.amount||0))}return [...map].sort((a,b)=>chartOrder==='asc'?a[1]-b[1]:b[1]-a[1]).slice(0,chartTop)}
-function indicatorCharts(expenses,incomes){let list=chartShow==='income'?incomes:expenses;return `<div class="panel"><h3>Gráficos gerenciais</h3><p class="help">Os gráficos respeitam os filtros de período e situação definidos acima. Selecione as opções para reorganizar a visualização.</p><div class="chart-toolbar"><label>Indicador<select name="metric" onchange="setChartOptions(this)"><option value="expense" ${chartShow==='expense'?'selected':''}>Despesas</option><option value="income" ${chartShow==='income'?'selected':''}>Receitas</option></select></label><label>Exibição<select name="style" onchange="setChartOptions(this)"><option value="bars" ${chartStyle==='bars'?'selected':''}>Barras horizontais</option><option value="columns" ${chartStyle==='columns'?'selected':''}>Colunas</option></select></label><label>Quantidade<select name="top" onchange="setChartOptions(this)">${[5,10,15,25,100].map(n=>`<option value="${n}" ${chartTop===n?'selected':''}>${n===100?'Todos (até 100)':`Top ${n}`}</option>`).join('')}</select></label><label>Ordenação<select name="order" onchange="setChartOptions(this)"><option value="desc" ${chartOrder==='desc'?'selected':''}>Maior para menor</option><option value="asc" ${chartOrder==='asc'?'selected':''}>Menor para maior</option></select></label></div><div class="chart-grid">${[['company','Empresa'],['category','Categoria'],['month','Mês de referência']].map(([dim,label])=>`<div class="chart-card"><h3>${chartShow==='income'?'Receitas':'Despesas'} por ${label.toLowerCase()}</h3>${renderChartSVG(groupIndicatorRows(list,dim),chartStyle)}</div>`).join('')}</div></div>`}
+function trendSetDimension(v){trendDimension=v;trendSelection='';render()}
+function trendSetSelection(v){trendSelection=v;render()}
+function trendSetView(v){trendView=v;render()}
+function trendMonths(start,end){let list=[];let month=start.slice(0,7),limit=end.slice(0,7);for(let i=0;i<120&&month<=limit;i++,month=plusMonths(month+'-01',1))list.push(month);return list}
+function trendPanel(start,end){
+ const months=trendMonths(start,end),all=indicatorSourceRows(start,end).filter(t=>t.type==='Despesa');
+ const candidates=[...new Set(all.map(x=>dimensionValue(x,trendDimension)))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+ const rows=all.filter(x=>!trendSelection||dimensionValue(x,trendDimension)===trendSelection);
+ const monthly=months.map(m=>({month:m,forecast:sum(rows.filter(x=>x.date.slice(0,7)===m),x=>x.amount),paid:sum(rows.filter(x=>x.date.slice(0,7)===m&&x.paid),x=>x.amount)}));
+ const max=Math.max(1,...monthly.flatMap(x=>[x.forecast,x.paid]));
+ const fmt=v=>money(v);
+ const w=1000,h=315,left=75,right=30,top=22,bottom=55;
+ const X=i=>left+(months.length<2?(w-left-right)/2:i*(w-left-right)/(months.length-1));
+ const Y=v=>h-bottom-(v/max)*(h-top-bottom);
+ const path=key=>monthly.map((r,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(r[key]).toFixed(1)).join(' ');
+ const step=Math.max(1,Math.ceil(months.length/10));
+ const grid=[0,.25,.5,.75,1].map(p=>`<line x1="${left}" y1="${Y(max*p)}" x2="${w-right}" y2="${Y(max*p)}" stroke="#e6eef4"/><text x="${left-10}" y="${Y(max*p)+4}" text-anchor="end" font-size="13" fill="#607b89">${esc((max*p).toLocaleString('pt-BR',{maximumFractionDigits:0}))}</text>`).join('');
+ const labels=months.map((m,i)=>i%step===0?`<text x="${X(i)}" y="${h-bottom+22}" text-anchor="middle" font-size="13" fill="#526f7e">${monthBR(m)}</text>`:'').join('');
+ const series=trendView==='line'
+ ?`<path d="${path('forecast')}" stroke="#5379d8" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="${path('paid')}" stroke="#08a49b" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>${monthly.map((r,i)=>`<circle cx="${X(i)}" cy="${Y(r.forecast)}" r="5" fill="#5379d8"><title>${monthBR(r.month)} previsto: ${fmt(r.forecast)}</title></circle><circle cx="${X(i)}" cy="${Y(r.paid)}" r="5" fill="#08a49b"><title>${monthBR(r.month)} liquidado: ${fmt(r.paid)}</title></circle>`).join('')}`
+ :monthly.map((r,i)=>{let width=Math.min(34,(w-left-right)/Math.max(months.length,1)*.3);return `<rect x="${X(i)-width-2}" y="${Y(r.forecast)}" width="${width}" height="${h-bottom-Y(r.forecast)}" rx="3" fill="#5379d8"><title>${monthBR(r.month)} previsto: ${fmt(r.forecast)}</title></rect><rect x="${X(i)+2}" y="${Y(r.paid)}" width="${width}" height="${h-bottom-Y(r.paid)}" rx="3" fill="#08a49b"><title>${monthBR(r.month)} liquidado: ${fmt(r.paid)}</title></rect>`}).join('');
+ return `<div class="trend-panel"><div class="trend-head"><div><h3>Evolução mensal · Previsto × Liquidado</h3><p class="help">Acompanhe compromissos por mês e refine por empresa ou categoria. Previsto = total de despesas; liquidado = parcela marcada como paga.</p></div><div class="trend-legend"><span><i class="legend-dot" style="background:#5379d8"></i>Previsto</span><span><i class="legend-dot" style="background:#08a49b"></i>Liquidado</span></div></div>
+ <div class="trend-controls"><label>Segmentar por<select onchange="trendSetDimension(this.value)"><option value="company" ${trendDimension==='company'?'selected':''}>Empresa</option><option value="category" ${trendDimension==='category'?'selected':''}>Categoria</option></select></label><label>Selecionar ${trendDimension==='company'?'empresa':'categoria'}<select onchange="trendSetSelection(this.value)"><option value="">Todas</option>${candidates.map(x=>`<option value="${esc(x)}" ${trendSelection===x?'selected':''}>${esc(x)}</option>`).join('')}</select></label><label>Visualização<select onchange="trendSetView(this.value)"><option value="line" ${trendView==='line'?'selected':''}>Linhas</option><option value="bar" ${trendView==='bar'?'selected':''}>Colunas</option></select></label></div>
+ <div class="trend-graph" role="img" aria-label="Evolução mensal de despesas previstas e liquidadas"><svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000" preserveAspectRatio="xMidYMid meet">${grid}${series}${labels}</svg></div>
+ ${months.length===0?'<p>Selecione um intervalo válido.</p>':''}
+ <div class="trend-table">${table(['Mês','Despesas previstas','Despesas liquidadas','Em aberto'],monthly.map(r=>`<tr><td>${monthBR(r.month)}</td><td>${fmt(r.forecast)}</td><td>${fmt(r.paid)}</td><td>${fmt(r.forecast-r.paid)}</td></tr>`))}</div>
+ <p class="help">A comparação considera o vencimento/competência dos lançamentos e parcelas, não a data efetiva de liquidação. Faturas de cartão não são contadas em duplicidade.</p></div>`;
+}
+function currentAnalysisConfig(){return {indicatorMode,indicatorMonth,indicatorStart,indicatorEnd,indicatorGroup,indicatorStatus,drillDimensions:[...drillDimensions],drillPath:drillPath.map(x=>({...x})),chartShow,chartTop,trendDimension,trendSelection,trendView}}
+function saveAnalysisFavorite(){
+ ensureAnalysis();let name=prompt('Nome para esta análise favorita:');if(name===null)return;name=name.trim();
+ if(!name){alert('Informe um nome.');return}
+ if(name.length>70){alert('O nome deve ter até 70 caracteres.');return}
+ if(data.analysisFavorites.some(x=>x.name.toLocaleLowerCase('pt-BR')===name.toLocaleLowerCase('pt-BR'))){alert('Já existe uma análise favorita com esse nome.');return}
+ data.analysisFavorites.push({id:uid(),name,config:currentAnalysisConfig()});save();render();
+}
+function applyAnalysisFavorite(id){
+ ensureAnalysis();const item=data.analysisFavorites.find(x=>x.id===id);if(!item)return;const c=item.config||{};
+ indicatorMode=c.indicatorMode||'month';indicatorMonth=c.indicatorMonth||ym();indicatorStart=c.indicatorStart||ym()+'-01';indicatorEnd=c.indicatorEnd||dueDate(ym(),31);
+ indicatorGroup=c.indicatorGroup||'company';indicatorStatus=c.indicatorStatus||'all';
+ drillDimensions=Array.isArray(c.drillDimensions)&&c.drillDimensions.length===3?[...c.drillDimensions]:['category','company','month'];
+ drillPath=Array.isArray(c.drillPath)?c.drillPath.map(x=>({...x})):[];
+ chartShow=c.chartShow||'expense';chartTop=c.chartTop||10;trendDimension=c.trendDimension||'company';trendSelection=c.trendSelection||'';trendView=c.trendView||'line';render();
+}
+function deleteAnalysisFavorite(id){ensureAnalysis();let item=data.analysisFavorites.find(x=>x.id===id);if(!item)return;if(!confirm('Excluir a análise favorita "'+item.name+'"?'))return;data.analysisFavorites=data.analysisFavorites.filter(x=>x.id!==id);save();render()}
+function favoritePanel(){ensureAnalysis();return `<div class="favorite-panel"><div class="favorite-heading"><div><h3>Análises favoritas</h3><p class="help">Salve a combinação atual de filtros, segmentações e níveis de drill-down. As configurações são sincronizadas com seu documento financeiro.</p></div><button class="primary" type="button" onclick="saveAnalysisFavorite()">☆ Salvar análise atual</button></div><div class="favorite-items">${data.analysisFavorites.length?data.analysisFavorites.map(x=>`<div class="favorite-item"><strong>${esc(x.name)}</strong><div><button type="button" class="secondary compact" onclick="applyAnalysisFavorite('${x.id}')">Abrir análise</button><button type="button" class="danger compact" onclick="deleteAnalysisFavorite('${x.id}')">Excluir</button></div></div>`).join(''):'<p class="help">Nenhuma análise salva. Configure os filtros e clique em Salvar análise atual.</p>'}</div></div>`}
+
 function indicators(){
  const start=indicatorMode==='month'?indicatorMonth+'-01':indicatorStart,end=indicatorMode==='month'?dueDate(indicatorMonth,31):indicatorEnd;
- const transactions=data.transactions.filter(t=>t.date>=start&&t.date<=end&&t.date>=data.cutoff);
- const purchaseParts=invoiceLines().filter(l=>l.date>=start&&l.date<=end&&l.date>=data.cutoff).map(l=>{let p=data.cardPurchases.find(p=>p.id===l.purchaseId);return {...l,type:'Despesa',paid:!!data.invoicePaid?.[l.cardId+'|'+l.month],companyId:p?.companyId||'',category:p?.category||'Cartão (sem categoria)',description:p?.description||'Compra no cartão',source:'cartao'}});
- const rows=[...transactions,...purchaseParts].filter(t=>indicatorStatus==='all'||(indicatorStatus==='paid'?t.paid:!t.paid));
+ const sourceRows=indicatorSourceRows(start,end);
+ const rows=sourceRows.filter(t=>indicatorStatus==='all'||(indicatorStatus==='paid'?t.paid:!t.paid));
  const expenses=rows.filter(t=>t.type==='Despesa'),incomes=rows.filter(t=>t.type==='Receita');
  const totalExp=sum(expenses,x=>x.amount),totalInc=sum(incomes,x=>x.amount);
  const grouped=new Map();for(const x of expenses){let label=indicatorGroup==='company'?companyName(x.companyId):indicatorGroup==='category'?(x.category||'Sem categoria'):x.date.slice(0,7);if(label==='—')label='Sem empresa';if(indicatorGroup==='month')label=monthBR(label);grouped.set(label,(grouped.get(label)||0)+Number(x.amount||0))}
  const groups=[...grouped].sort((a,b)=>b[1]-a[1]),max=groups[0]?.[1]||1;
  return `<div class="panel"><h3>Indicadores financeiros</h3><p class="help">Filtre por mês de referência ou intervalo de datas. Compras de cartão são consideradas pelo mês de vencimento da parcela/fatura, sem duplicar a fatura consolidada.</p><form onsubmit="setIndicatorFilters(event)"><label>Tipo de período<select name="mode"><option value="month" ${indicatorMode==='month'?'selected':''}>Mês de referência</option><option value="dates" ${indicatorMode==='dates'?'selected':''}>Intervalo de datas</option></select></label>${field('Mês de referência','month','month',indicatorMonth)}${field('Data inicial','start','date',indicatorStart)}${field('Data final','end','date',indicatorEnd)}<label>Agrupar despesas por<select name="group"><option value="company" ${indicatorGroup==='company'?'selected':''}>Empresa</option><option value="category" ${indicatorGroup==='category'?'selected':''}>Categoria</option><option value="month" ${indicatorGroup==='month'?'selected':''}>Mês</option></select></label><label>Situação<select name="status"><option value="all" ${indicatorStatus==='all'?'selected':''}>Todas</option><option value="paid" ${indicatorStatus==='paid'?'selected':''}>Liquidadas</option><option value="pending" ${indicatorStatus==='pending'?'selected':''}>Pendentes</option></select></label><div class="wide">${btn('Aplicar filtros')}</div></form><p class="help">Período: ${dateBR(start)} a ${dateBR(end)} • Situação: ${indicatorStatus==='all'?'Todas':indicatorStatus==='paid'?'Liquidadas':'Pendentes'}</p></div>
  <div class="cards">${card('Receitas',totalInc,'positive')}${card('Despesas',totalExp,'negative')}${card('Resultado previsto (receitas − despesas)',totalInc-totalExp,totalInc-totalExp<0?'negative':'positive')}<div class="card"><label>Registros considerados</label><strong>${rows.length}</strong></div></div>
- ${indicatorCharts(expenses,incomes)}<div class="panel"><h3>Despesas por ${indicatorGroup==='company'?'empresa':indicatorGroup==='category'?'categoria':'mês'}</h3>${groups.length?groups.map(([name,value])=>`<div class="indicator-bar"><span class="indicator-label" title="${esc(name)}">${esc(name)}</span><div class="indicator-track"><div class="indicator-fill" style="width:${Math.min(100,100*value/max).toFixed(2)}%"></div></div><strong class="indicator-value">${money(value)}</strong></div>`).join(''):'<p class="muted">Nenhuma despesa no período.</p>'}</div>
+ ${favoritePanel()}${indicatorCharts(expenses,incomes)}${trendPanel(start,end)}<div class="panel"><h3>Despesas por ${indicatorGroup==='company'?'empresa':indicatorGroup==='category'?'categoria':'mês'}</h3>${groups.length?groups.map(([name,value])=>`<div class="indicator-bar"><span class="indicator-label" title="${esc(name)}">${esc(name)}</span><div class="indicator-track"><div class="indicator-fill" style="width:${Math.min(100,100*value/max).toFixed(2)}%"></div></div><strong class="indicator-value">${money(value)}</strong></div>`).join(''):'<p class="muted">Nenhuma despesa no período.</p>'}</div>
  <div class="panel"><h3>Detalhamento dos indicadores</h3>${table(['Data','Origem','Descrição','Empresa','Categoria','Situação','Valor'],rows.sort((a,b)=>a.date.localeCompare(b.date)).map(x=>`<tr><td>${dateBR(x.date)}</td><td>${x.source==='cartao'?'Cartão':'Conta'}</td><td>${esc(x.description)}</td><td>${esc(companyName(x.companyId))}</td><td>${esc(x.category||'—')}</td><td>${x.paid?'Liquidado':'Pendente'}</td><td>${x.type==='Receita'?'+':'−'} ${money(x.amount)}</td></tr>`))}</div>`;
 }
 function budget(){let c=data.config,estimate=c.base+c.extras,month=currentMonth(),real=sum(month.filter(t=>t.type==='Despesa'&&t.paid),x=>x.amount),future=sum(month.filter(t=>t.type==='Despesa'&&!t.paid),x=>x.amount);return `<div class="cards">${card('Premissa: despesas habituais',c.base)}${card('Premissa: gastos extras',c.extras)}${card('Pago no mês',real)}${card('Pendente no mês',future)}</div><div class="panel"><h3>Orçamento previsto × realizado</h3><p>Referência mensal: <b>${money(estimate)}</b> (ajustável). A faculdade está incluída nas despesas habituais, caso esteja no total cadastrado, ou pode ser lançada separadamente sem destaque.</p><p class="help">A comparação por categoria será aperfeiçoada quando o orçamento for distribuído por categoria. Não misture lançamentos reais com a estimativa de R$ 4.500.</p></div>`}
